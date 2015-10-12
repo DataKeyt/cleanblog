@@ -1,9 +1,10 @@
 <?php
+
+//connect db
+require 'include/database.php';
+
 // Get post id
 $post_id = isset($_GET['id']) ? $_GET['id'] : -1;
-//connect DB
-$db = mysqli_connect('127.0.0.1', 'root', '', 'cleanblog') or die(mysqli_error($db));
-mysqli_query($db, "SET NAMES 'utf8'");
 
 //Retrieve data from DB
 $q = mysqli_query($db, "SELECT *, DATE_FORMAT(post_created, '%d.%m.%Y %H:%i') post_created FROM posts NATURAL JOIN authors WHERE post_id=$post_id");
@@ -26,10 +27,10 @@ $post = mysqli_fetch_assoc($q);
     <title>Clean Blog - Sample Post</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/clean-blog.min.css" rel="stylesheet">
+    <link href="../css/clean-blog.min.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"
@@ -63,23 +64,23 @@ $post = mysqli_fetch_assoc($q);
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.php">Start Bootstrap</a>
+            <a class="navbar-brand" href="../index.php">Start Bootstrap</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="index.php">Home</a>
+                    <a href="../index.php">Home</a>
                 </li>
                 <li>
-                    <a href="about.html">About</a>
+                    <a href="../about.html">About</a>
                 </li>
                 <li>
                     <a href="post.php">Sample Post</a>
                 </li>
                 <li>
-                    <a href="contact.html">Contact</a>
+                    <a href="../contact.html">Contact</a>
                 </li>
             </ul>
         </div>
@@ -90,7 +91,7 @@ $post = mysqli_fetch_assoc($q);
 
 <!-- Page Header -->
 <!-- Set your background image for this header on the line below. -->
-<header class="intro-header" style="background-image: url('img/post-bg.jpg')">
+<header class="intro-header" style="background-image: url('../img/post-bg.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -156,13 +157,13 @@ $post = mysqli_fetch_assoc($q);
 </footer>
 
 <!-- jQuery -->
-<script src="js/jquery.js"></script>
+<script src="../js/jquery.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="js/bootstrap.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="js/clean-blog.min.js"></script>
+<script src="../js/clean-blog.min.js"></script>
 
 </body>
 
