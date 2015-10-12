@@ -1,3 +1,17 @@
+<?php
+// Get post id
+$post_id = isset($_GET['id']) ? $_GET['id'] : -1;
+//connect DB
+$db = mysqli_connect('127.0.0.1', 'root', '', 'cleanblog') or die(mysqli_error($db));
+mysqli_query($db, "SET NAMES 'utf8'");
+
+//Retrieve data from DB
+$q = mysqli_query($db, "SELECT *, DATE_FORMAT(post_created, '%d.%m.%Y %H:%i') post_created FROM posts NATURAL JOIN authors WHERE post_id=$post_id");
+
+$post = mysqli_fetch_assoc($q);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +23,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Clean Blog - Contact</title>
+    <title>Clean Blog - Sample Post</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -22,8 +36,9 @@
           type="text/css">
     <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet'
           type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
-          rel='stylesheet' type='text/css'>
+    <link
+        href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+        rel='stylesheet' type='text/css'>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -58,7 +73,7 @@
                     <a href="index.php">Home</a>
                 </li>
                 <li>
-                    <a href="about.php">About</a>
+                    <a href="about.html">About</a>
                 </li>
                 <li>
                     <a href="post.php">Sample Post</a>
@@ -69,84 +84,37 @@
             </ul>
         </div>
         <!-- /.navbar-collapse -->
-        </div>
+    </div>
     <!-- /.container -->
 </nav>
 
 <!-- Page Header -->
 <!-- Set your background image for this header on the line below. -->
-<header class="intro-header" style="background-image: url('img/contact-bg.jpg')">
+<header class="intro-header" style="background-image: url('img/post-bg.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="page-heading">
-                    <h1>Contact Me</h1>
-                    <hr class="small">
-                    <span class="subheading">Have questions? I have answers (maybe).</span>
-                </div>
+                <div class="post-heading">
+                    <h1 class="post-title"><?= $post['post_title'] ?></h1>
+
+                    <h2 class="subheading"><?= $post['post_description'] ?></h2>
+
+                    <span class="meta">Posted by <a
+                            href="#"><?= $post['author_name'] ?></a> on <?= $post['post_created'] ?></span>
                 </div>
             </div>
         </div>
+    </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-            <p>Want to get in touch with me? Fill out the form below to send me a message and I will try to get back to
-                you within 24 hours!</p>
-            <!-- Contact Form - Enter your email address on line 19 of the mail/contact_me.php file to make this form work. -->
-            <!-- WARNING: Some web hosts do not allow emails to be sent through forms to common mail hosts like Gmail or Yahoo. It's recommended that you use a private domain email address! -->
-            <!-- NOTE: To use the contact form, your site must be on a live web host with PHP! The form will not work locally! -->
-            <form name="sentMessage" id="contactForm" novalidate>
-                <div class="row control-group">
-                    <div class="form-group col-xs-12 floating-label-form-group controls">
-                        <label>Name</label>
-                        <input type="text" class="form-control" placeholder="Name" id="name" required
-                               data-validation-required-message="Please enter your name.">
-
-                        <p class="help-block text-danger"></p>
-                    </div>
-                    </div>
-                <div class="row control-group">
-                    <div class="form-group col-xs-12 floating-label-form-group controls">
-                        <label>Email Address</label>
-                        <input type="email" class="form-control" placeholder="Email Address" id="email" required
-                               data-validation-required-message="Please enter your email address.">
-
-                        <p class="help-block text-danger"></p>
-                    </div>
-                    </div>
-                <div class="row control-group">
-                    <div class="form-group col-xs-12 floating-label-form-group controls">
-                        <label>Phone Number</label>
-                        <input type="tel" class="form-control" placeholder="Phone Number" id="phone" required
-                               data-validation-required-message="Please enter your phone number.">
-
-                        <p class="help-block text-danger"></p>
-                    </div>
-                    </div>
-                <div class="row control-group">
-                    <div class="form-group col-xs-12 floating-label-form-group controls">
-                        <label>Message</label>
-                        <textarea rows="5" class="form-control" placeholder="Message" id="message" required
-                                  data-validation-required-message="Please enter a message."></textarea>
-
-                        <p class="help-block text-danger"></p>
-                    </div>
-                    </div>
-                <br>
-
-                <div id="success"></div>
-                <div class="row">
-                    <div class="form-group col-xs-12">
-                        <button type="submit" class="btn btn-default">Send</button>
-                    </div>
-                    </div>
-            </form>
-        </div>
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><?= $post['post_text'] ?></div>
         </div>
     </div>
+</article>
 
 <hr>
 
@@ -183,8 +151,8 @@
                 </ul>
                 <p class="copyright text-muted">Copyright &copy; Your Website 2014</p>
             </div>
-            </div>
         </div>
+    </div>
 </footer>
 
 <!-- jQuery -->
@@ -199,3 +167,4 @@
 </body>
 
 </html>
+

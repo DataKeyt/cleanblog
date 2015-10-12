@@ -1,11 +1,11 @@
-<?
-
-//Connect database
+<?php
+//connect DB
 $db = mysqli_connect('127.0.0.1', 'root', '', 'cleanblog') or die(mysqli_error($db));
 mysqli_query($db, "SET NAMES 'utf8'");
 
-//Retrieve data from database
+//Retrieve data from DB
 $q = mysqli_query($db, "SELECT * FROM posts NATURAL JOIN authors");
+$posts = array();
 while ($row = mysqli_fetch_assoc($q)) {
     $posts[] = $row;
 }
@@ -75,7 +75,7 @@ while ($row = mysqli_fetch_assoc($q)) {
                     <a href="about.html">About</a>
                 </li>
                 <li>
-                    <a href="post.html">Sample Post</a>
+                    <a href="post.php">Sample Post</a>
                 </li>
                 <li>
                     <a href="contact.html">Contact</a>
@@ -107,25 +107,26 @@ while ($row = mysqli_fetch_assoc($q)) {
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-
-            <? foreach ($posts as $post): ?>
-
+            <?php
+            foreach ($posts as $post) { ?>
                 <div class="post-preview">
+                    <a href="post.php?id=<?= $post['post_id'] ?>">
+                        <h2 class="post-title">
+                            <?= $post['post_title'] ?>
+                        </h2>
 
-                    <a href="post.html">
-                        <h2 class="post-title"><?= $post['post_title'] ?></h2>
-
-                        <h3 class="post-subtitle"><?= $post['post_description'] ?></h3>
+                        <h3 class="post-subtitle">
+                            <?= $post['post_description'] ?>
+                        </h3>
                     </a>
 
-                    <p class="post-meta">Posted by <a href="#"><?= $post['author_name'] ?>Start Bootstrap</a>
-                        on <?= $post['post_created'] ?></p>
-
+                    <p class="post-meta">Posted by <a href="#">
+                            <?= $post['author_name'] ?>
+                        </a> on <?= $post['post_created'] ?></p>
                 </div>
-
                 <hr>
-            <? endforeach ?>
 
+            <?php }; ?>
 
             <!-- Pager -->
             <ul class="pager">
