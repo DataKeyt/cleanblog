@@ -1,11 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: DataKeyt
- * Date: 12.10.2015
- * Time: 22:22
- */
+//Connect database
 require_once 'config.php';
-//connect DB
-$db = mysqli_connect('127.0.0.1', 'root', '', 'cleanblog') or die(mysqli_error($db));
+$db = mysqli_connect(DATABASE_HOSTNAME, DATABASE_USERNAME, DATABASE_PASSWORD, DATABASE_DATABASE) or die(mysqli_error($db));
 mysqli_query($db, "SET NAMES 'utf8'");
+?>
